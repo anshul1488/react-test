@@ -15,6 +15,7 @@ class ListView extends React.Component {
     componentWillReceiveProps = (props) => {
         this.setState({ data: this.createDataForListView(props)});
     }
+    
     createDataForListView = (props) => {
         const dataInput = [];
         if(props.searchResults != null) {
