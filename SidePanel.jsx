@@ -3,26 +3,23 @@ import 'jquery-ui/ui/widgets/accordion';
 import Frame from './Frame';
 
 class SidePanel extends React.Component {
-
-    render(props) {
-        var gridDetailsForPerson = {
+    state = {
+        gridDetailsForPerson : {
             frameHeader: 'Person Details',
             colNum: 'three',
             rows: [
                 [
-                    { columnHeader: 'Member ID', columnValue: '4321', columnWidth: 'three' },
-                    { columnHeader: 'First Name', columnValue: 'John', columnWidth: 'three' },
-                    { columnHeader: 'Last Name', columnValue: 'Doe', columnWidth: 'three' }
+                    { columnHeader: 'Member ID', columnValue: '-', columnWidth: 'three' },
+                    { columnHeader: 'First Name', columnValue: '-', columnWidth: 'three' },
+                    { columnHeader: 'Last Name', columnValue: '-', columnWidth: 'three' }
                     
                 ],
                 [
-                    { columnHeader: 'Date of Birth', columnValue: '01/03/1987', columnWidth: 'three' },
-                    { columnHeader: 'Marital Status', columnValue: 'Single', columnWidth: 'three' },
-                    { columnHeader: 'Gender', columnValue: 'Male', columnWidth: 'three' }
+                    { columnHeader: 'Date of Birth', columnValue: '-', columnWidth: 'three' }
                 ]
             ]
-        };
-        var gridDetailsForCoverage = {
+        },
+        gridDetailsForCoverage : {
             frameHeader: 'Coverage Details',
             colNum: 'three',
             rows: [
@@ -41,11 +38,39 @@ class SidePanel extends React.Component {
                     { columnHeader: 'Total Premium Amount', columnValue: '$2200.00', columnWidth: 'three' }
                 ]
             ]
-        };
+        }
+    };
+
+
+    componentWillReceiveProps = (props) => {
+        if(props.searchResults != null && props.selectedRowIndex != null) {
+            let memberNode = props.searchResults[0].MembersForMasterPlanResponseRoot.Members.Member[props.selectedRowIndex];
+            let gridDetailsForPersonNew = {
+                frameHeader: 'Person Details',
+                colNum: 'three',
+                rows: [
+                    [
+                        { columnHeader: 'Member ID', columnValue: memberNode.MemberID, columnWidth: 'three' },
+                        { columnHeader: 'First Name', columnValue: memberNode.FirstName, columnWidth: 'three' },
+                        { columnHeader: 'Last Name', columnValue: memberNode.LastName, columnWidth: 'three' }
+                        
+                    ],
+                    [
+                        { columnHeader: 'Date of Birth', columnValue: memberNode.BirthDate, columnWidth: 'three' }
+                    ]
+                ]
+            };
+            this.setState({ gridDetailsForPerson: gridDetailsForPersonNew});
+        }
+        
+    }
+
+    render() {
+        
         return (
         <div className="ui segment"> 
-            <Frame gridDetails={gridDetailsForPerson} />
-            <Frame gridDetails={gridDetailsForCoverage} />
+            <Frame gridDetails={this.state.gridDetailsForPerson} />
+            <Frame gridDetails={this.state.gridDetailsForCoverage} />
         </div>
         );
     }
