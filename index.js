@@ -18,7 +18,6 @@ class MemberSelfAdminTab extends React.Component {
     }
 
     getSearchResults = (results) => {
-        console.log('got data: ' + results);
         this.setState({ searchResults: results });
     }
 

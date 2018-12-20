@@ -6,8 +6,8 @@ class ListView extends React.Component {
     state = {
         data : [],
         columns : [
+            { Header: 'Surname', accessor: 'LastName' },
             { Header: 'First Name', accessor: 'FirstName' },
-            { Header: 'Last Name', accessor: 'LastName' },
             { Header: 'Member ID', accessor: 'MemberID' },
         ]
     };
@@ -52,7 +52,7 @@ class ListView extends React.Component {
         return (
             <div className="ui segment">
                 <ReactTable data={ this.state.data } columns={ this.state.columns } defaultPageSize={ 10 } noDataText='' 
-                    getTrProps={ this.handleRowSelection } />
+                    getTrProps={ this.handleRowSelection } showPageSizeOptions={ false } />
             </div>
         );
     }

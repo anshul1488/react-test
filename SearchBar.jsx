@@ -6,6 +6,25 @@ class SearchBar extends React.Component {
     state = {
         members: []
     }
+
+    createSearchQuery = () => {
+        let searchTemplate = {
+            "MembersForMasterPlanRequestRoot":{
+               "MasterPlanID":"",
+               "MemberID":"",
+               "FirstName":"",      
+               "LastName":"",
+               "PageSize":"10",
+               "PageNumber":"0",
+               "SortBy":["LastName", "FirstNames", "MemberID"]
+            }
+        };
+        searchTemplate.MembersForMasterPlanRequestRoot.FirstName = ReactDOM.findDOMNode(this.refs.firstNameRef).value;
+        searchTemplate.MembersForMasterPlanRequestRoot.LastName = ReactDOM.findDOMNode(this.refs.surnameRef).value;
+        searchTemplate.MembersForMasterPlanRequestRoot.MemberID = ReactDOM.findDOMNode(this.refs.membderIDRef).value;
+        console.log(searchTemplate);
+    }
+    
     handleReset = () => {
       ReactDOM.findDOMNode(this.refs.firstNameRef).value = "";
       ReactDOM.findDOMNode(this.refs.surnameRef).value = "";
@@ -14,8 +33,9 @@ class SearchBar extends React.Component {
     }
 
     handleSearch = async () => {
+        this.createSearchQuery();
         const response = await fetch('http://localhost:8080/v1/MembersForMasterPlan', {
-        	method: 'post',
+            method: 'post',
             body:  JSON.stringify({
                 "MembersForMasterPlanRequestRoot":{
                    "MasterPlanID":"12",
@@ -37,7 +57,7 @@ class SearchBar extends React.Component {
         const membersDataFromApi = [];
         const jsonData = await response.json();
         membersDataFromApi.push(jsonData);
-        console.log(membersDataFromApi);
+        
         this.props.getSearchResults(membersDataFromApi);
     }
 
@@ -48,8 +68,8 @@ class SearchBar extends React.Component {
                     <div className="two fields">
 
                         <div className="field">
-                            <label>Member ID</label>
-                            <input type="text" name="memberId" placeholder="Enter Member ID" ref="membderIDRef" onChange={this.handleChange}/>
+                            <label>Surname</label>
+                            <input type="text" name="surname" placeholder="Enter Surname" ref="surnameRef" onChange={this.handleChange}/>
                         </div>
                         
                         <div className="field">
@@ -58,11 +78,9 @@ class SearchBar extends React.Component {
                         </div>
                         
                         <div className="field">
-                            <label>Surname</label>
-                            <input type="text" name="surname" placeholder="Enter Surname" ref="surnameRef" onChange={this.handleChange}/>
+                            <label>Member ID</label>
+                            <input type="text" name="memberId" placeholder="Enter Member ID" ref="membderIDRef" onChange={this.handleChange}/>
                         </div>
-                        
-   
 
                     </div>
                     <button id="searchButton" className="ui primary button" 

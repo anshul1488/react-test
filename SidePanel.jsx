@@ -9,10 +9,9 @@ class SidePanel extends React.Component {
             colNum: 'three',
             rows: [
                 [
-                    { columnHeader: 'Member ID', columnValue: '-', columnWidth: 'three' },
+                    { columnHeader: 'Surname', columnValue: '-', columnWidth: 'three' },
                     { columnHeader: 'First Name', columnValue: '-', columnWidth: 'three' },
-                    { columnHeader: 'Last Name', columnValue: '-', columnWidth: 'three' }
-                    
+                    { columnHeader: 'Member ID', columnValue: '-', columnWidth: 'three' }
                 ],
                 [
                     { columnHeader: 'Date of Birth', columnValue: '-', columnWidth: 'three' }
